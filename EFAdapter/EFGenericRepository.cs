@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace EFAdapter
 {
-    public class EFRePository<T> : IRepository<T> where T : class
+    public class EFRepository<T> : IRepository<T> where T : class
     {
         private readonly IUOW uow;
 
@@ -25,7 +25,7 @@ namespace EFAdapter
             T? entityToDelete = GetByID(id);
             if (entityToDelete != null)
             {
-                Delete(entityToDelete);
+                dbSet.Remove(entityToDelete);                
             }
         }
 
@@ -70,7 +70,7 @@ namespace EFAdapter
             context.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
-        public EFRePository(IUOW uow)
+        public EFRepository(IUOW uow)
         {
             this.uow = uow;
             dbSet = context.Set<T>();
